@@ -1,6 +1,50 @@
+const gold = "#FFD700";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth / 1.2;
 canvas.height = window.innerHeight / 1.5;
-ctx.fillStyle= 'gray'
-ctx.fillRect(0, 0, canvas.width, canvas.height)
+const cx = canvas.width * 0.6;
+const cy = canvas.height * 0.5;
+const R = Math.min(canvas.width, canvas.height) * 0.45;
+const gap = 0.25;
+
+function drawBackground() {
+  ctx.fillStyle = "gray";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+}
+
+function drawFoil() {
+  ctx.fillStyle = gold;
+  ctx.translate(cx, cy);
+  ctx.transform(1, 0.5, 0, 1, 0, 0);
+  ctx.fillRect(-20, -100, 100, 200);
+  ctx.resetTransform();
+}
+
+function drawRing(cx, cy, R, gap) {
+  const innerR = R * 0.86;
+  const innerCx = cx + R * 0.08;
+  const innerCy = cy;
+  const startAngle = Math.PI + gap;
+  const endAngle = Math.PI - gap;
+
+  const grad = ctx.createRadialGradient(innerCx, innerCy, innerR, cx, cy, R);
+  grad.addColorStop(0, "#d6efff");
+  grad.addColorStop(1, "#0a8be0");
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, startAngle, endAngle);
+  ctx.arc(innerCx, innerCy, innerR, endAngle, startAngle, true);
+  ctx.closePath();
+
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.strokeStyle = "#0670b5";
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+}
+
+drawBackground();
+drawFoil();
+drawRing(cx, cy, R, gap);
