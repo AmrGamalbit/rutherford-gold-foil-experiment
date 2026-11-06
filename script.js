@@ -7,6 +7,9 @@ const cx = canvas.width * 0.6;
 const cy = canvas.height * 0.5;
 const R = Math.min(canvas.width, canvas.height) * 0.45;
 const gap = 0.25;
+const img = new Image();
+img.src = "assets/radiation.png";
+img.onload = () => drawEverything();
 
 function drawBackground() {
   ctx.fillStyle = "gray";
@@ -45,6 +48,29 @@ function drawRing(cx, cy, R, gap) {
   ctx.stroke();
 }
 
-drawBackground();
-drawFoil();
-drawRing(cx, cy, R, gap);
+function drawLeadBlock() {
+  const rectX = canvas.width * 0.1;
+  const rectY = cy - 50;
+  const rectWidth = 100;
+  const rectHeight = 100;
+
+  ctx.fillStyle = "#212121";
+  ctx.strokeStyle = "#0b0b0b";
+  ctx.lineWidth = 3;
+
+  ctx.rect(rectX, rectY, rectWidth, rectHeight);
+  ctx.fill();
+  ctx.stroke();
+
+  const imgX = rectX + (rectWidth - img.width) / 2;
+  const imgY = rectY + (rectHeight - img.height) / 2;
+
+  ctx.drawImage(img, imgX, imgY);
+}
+
+function drawEverything() {
+  drawBackground();
+  drawFoil();
+  drawLeadBlock();
+  drawRing(cx, cy, R, gap);
+}
