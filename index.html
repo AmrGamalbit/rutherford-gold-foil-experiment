@@ -8,7 +8,41 @@
     <title>Rutherford's gold foil experiment</title>
   </head>
   <body>
-      <header><h2>Rutherford's gold foil experiment</h2><p>Description</p></header>
-      <main><canvas id="canvas"></canvas></main>
+    <header>
+      <h2>Rutherford's gold foil experiment</h2>
+      <p>Description</p>
+    </header>
+    <main>
+      <div class="game">
+        <canvas id="canvas"></canvas>
+        <div class="controls">
+          <button>Start</button>
+          <div class="option">
+            <label for="particle-count">Number of particles</label>
+            <input id="particle-count" type="range" />
+          </div>
+          <div class="option">
+            <label for="foil-thickness">Foil Thickness</label>
+            <input id="foil-thickness" type="range" />
+          </div>
+          <div class="options-group">
+            <p>Atomic Model</p>
+            <div class="option">
+              <input
+                type="radio"
+                id="plum-pudding"
+                name="choice"
+                value="plum-pudding"
+              />
+              <label for="plum-pudding">Plum pudding</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="nuclear" name="choice" value="nuclear" checked />
+              <label for="nuclear">Nuclear</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

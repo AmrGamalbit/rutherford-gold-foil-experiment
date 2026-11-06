@@ -23,7 +23,61 @@ header p {
   padding: 10px;
 }
 
+.game {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 #canvas {
-    display: block;
-  margin: 0 auto;
+  display: block;
+}
+
+button {
+  all: unset;
+  padding: 10px;
+  background-color: #3b82f6;
+  color: #f2f0ef;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  filter: brightness(110%);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  gap: 10px;
+}
+
+.controls label {
+  color: #f2f0ef;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  user-select: none;
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.options-group p {
+  font-size: 20px;
+  color: #f2f0ef;
+  font-family: Arial, Helvetica, sans-serif;
+  user-select: none;
+  margin-bottom: 10px;
 }

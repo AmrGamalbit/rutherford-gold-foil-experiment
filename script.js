@@ -1,7 +1,7 @@
 const gold = "#FFD700";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth / 1.2;
+canvas.width = window.innerWidth / 1.4;
 canvas.height = window.innerHeight / 1.5;
 const cx = canvas.width * 0.6;
 const cy = canvas.height * 0.5;
