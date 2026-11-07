@@ -7,9 +7,26 @@ const cx = canvas.width * 0.6;
 const cy = canvas.height * 0.5;
 const R = Math.min(canvas.width, canvas.height) * 0.45;
 const gap = 0.25;
+const leadBlockX = canvas.width * 0.1;
+const leadBlockY = cy - 50;
 const img = new Image();
 img.src = "assets/radiation.png";
 img.onload = () => drawEverything();
+let animationId;
+
+let particles = [];
+
+const startButton = document.getElementById("start-button");
+startButton.addEventListener("click", () => {
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+    startButton.innerText = "Start";
+    animationId = null;
+  } else {
+    animationId = requestAnimationFrame(update);
+    startButton.innerText = "Pause";
+  }
+});
 
 function drawBackground() {
   ctx.fillStyle = "gray";
@@ -49,8 +66,6 @@ function drawRing(cx, cy, R, gap) {
 }
 
 function drawLeadBlock() {
-  const rectX = canvas.width * 0.1;
-  const rectY = cy - 50;
   const rectWidth = 100;
   const rectHeight = 100;
 
@@ -58,19 +73,49 @@ function drawLeadBlock() {
   ctx.strokeStyle = "#0b0b0b";
   ctx.lineWidth = 3;
 
-  ctx.rect(rectX, rectY, rectWidth, rectHeight);
+  ctx.rect(leadBlockX, leadBlockY, rectWidth, rectHeight);
   ctx.fill();
   ctx.stroke();
 
-  const imgX = rectX + (rectWidth - img.width) / 2;
-  const imgY = rectY + (rectHeight - img.height) / 2;
+  const imgX = leadBlockX + (rectWidth - img.width) / 2;
+  const imgY = leadBlockY + (rectHeight - img.height) / 2;
 
   ctx.drawImage(img, imgX, imgY);
 }
 
+function drawParticle(x, y) {
+  ctx.beginPath();
+  ctx.ellipse(x, y, 4, 4, 0, 0, Math.PI * 2);
+  ctx.fillStyle = "#FF4500";
+  ctx.fill();
+}
+
+function spawnParticle() {
+  const startX = leadBlockX + 50;
+  const startY = leadBlockY + 50;
+  particles.push({ x: startX, y: startY });
+}
+
+function updateParticles() {
+  particles.forEach((p) => {
+    p.x += 10;
+  });
+  particles = particles.filter((p) => p.x < canvas.width);
+}
+
 function drawEverything() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBackground();
   drawFoil();
   drawLeadBlock();
   drawRing(cx, cy, R, gap);
+  particles.forEach((p) => drawParticle(p.x, p.y));
 }
+
+function update() {
+  drawEverything();
+  updateParticles();
+  animationId = requestAnimationFrame(update);
+}
+
+setInterval(spawnParticle, 1000);
