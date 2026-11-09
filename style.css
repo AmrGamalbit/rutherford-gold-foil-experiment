@@ -81,3 +81,11 @@ button:hover {
   user-select: none;
   margin-bottom: 10px;
 }
+
+ul {
+  padding: 15px
+}
+
+li {
+  color: #f2f0ef
+}

@@ -10,7 +10,37 @@
   <body>
     <header>
       <h2>Rutherford's gold foil experiment</h2>
-      <p>Description</p>
+      <p>
+        This experiment was directed by Ernest Rutherford and performed in 1909
+        by Hans Geiger and Ernest Marsden at the University of Manchester.
+      </p>
+      <p>
+        Before that, people believed in Thomson's plum pudding model, which
+        pictured the atom as a uniform sea of positive charge with tiny,
+        negatively charged electrons embedded throughout it.
+      </p>
+      <p>
+        They used alpha particles and directed them towards an extremely thin
+        gold foil.
+      </p>
+      <p>
+        If Thomson's model was true, almost all particles should pass through
+        with only slight bending.
+      </p>
+      <p>But the shocking truth was that:</p>
+      <ul>
+        <li>Most particles went straight through without bending.</li>
+        <li>Some bent at noticeable angles.</li>
+        <li>About 1 in 8000 bounced almost straight back.</li>
+      </ul>
+      <p>Shocked by the results, they concluded that:</p>
+      <ul>
+        <li>The atom is almost all empty space.</li>
+        <li>
+          The positive charge is packed in a tiny but still powerful nucleus.
+        </li>
+        <li>Negative particles surround the nucleus.</li>
+      </ul>
     </header>
     <main>
       <div class="game">
@@ -19,11 +49,23 @@
           <button id="start-button">Start</button>
           <div class="option">
             <label for="particle-count">Number of particles</label>
-            <input id="particle-count" type="range" value="1" min="1" max="20" />
+            <input
+              id="particle-count"
+              type="range"
+              value="1"
+              min="1"
+              max="20"
+            />
           </div>
           <div class="option">
             <label for="foil-thickness">Foil Thickness</label>
-            <input id="foil-thickness" type="range" value="1" min="1" max="20" />
+            <input
+              id="foil-thickness"
+              type="range"
+              value="1"
+              min="1"
+              max="20"
+            />
           </div>
           <div class="options-group" id="atomic-model">
             <p>Atomic Model</p>
@@ -37,7 +79,13 @@
               <label for="plum-pudding">Plum pudding</label>
             </div>
             <div class="option">
-              <input type="radio" id="nuclear" name="choice" value="nuclear" checked />
+              <input
+                type="radio"
+                id="nuclear"
+                name="choice"
+                value="nuclear"
+                checked
+              />
               <label for="nuclear">Nuclear</label>
             </div>
           </div>
