@@ -20,13 +20,22 @@ const modelInputs = document.querySelectorAll('input[type="radio"]');
 let atomicModel = Array.from(modelInputs).find((i) => i.checked).value;
 modelInputs.forEach((i) =>
   i.addEventListener("change", (e) => {
-    atomicModel = e.target.value
-    nuclei.length = 0
+    atomicModel = e.target.value;
+    nuclei.length = 0;
     if (atomicModel == "nuclear") {
       createNuclei(foilX, foilY, foilWidth, foilHeight);
     }
   }),
 );
+
+let numberOfParticles = 1;
+const numberOfParticlesInput = document.getElementById("particle-count");
+numberOfParticlesInput.addEventListener("change", (e) => {
+  numberOfParticles = Number(e.target.value);
+  clearInterval(spawnId)
+  spawnId = setInterval(spawnParticle, 1000 / numberOfParticles)
+});
+
 let particles = [];
 const foilX = -20;
 const foilY = -100;
@@ -39,7 +48,7 @@ startButton.addEventListener("click", () => {
   running = !running;
   if (running) {
     animationId = requestAnimationFrame(update);
-    spawnId = setInterval(spawnParticle, 100);
+    spawnId = setInterval(spawnParticle, 1000 / numberOfParticles);
     startButton.innerText = "Pause";
   } else {
     cancelAnimationFrame(animationId);
