@@ -16,6 +16,11 @@ let animationId;
 let spawnId;
 const nuclei = [];
 
+let foilThickness = 1
+let density = 5
+let count = foilThickness * density;
+let numberOfParticles = 1;
+
 const modelInputs = document.querySelectorAll('input[type="radio"]');
 let atomicModel = Array.from(modelInputs).find((i) => i.checked).value;
 modelInputs.forEach((i) =>
@@ -23,17 +28,24 @@ modelInputs.forEach((i) =>
     atomicModel = e.target.value;
     nuclei.length = 0;
     if (atomicModel == "nuclear") {
-      createNuclei(foilX, foilY, foilWidth, foilHeight);
+      createNuclei(foilThickness, foilX, foilY, foilWidth, foilHeight);
     }
   }),
 );
 
-let numberOfParticles = 1;
 const numberOfParticlesInput = document.getElementById("particle-count");
 numberOfParticlesInput.addEventListener("change", (e) => {
   numberOfParticles = Number(e.target.value);
-  clearInterval(spawnId)
-  spawnId = setInterval(spawnParticle, 1000 / numberOfParticles)
+  clearInterval(spawnId);
+  spawnId = setInterval(spawnParticle, 1000 / numberOfParticles);
+});
+
+const foilThicknessInput = document.getElementById("foil-thickness");
+foilThicknessInput.addEventListener("change", (e) => {
+  foilThickness = Number(e.target.value);
+  count = foilThickness * density
+  nuclei.length = 0;
+  createNuclei(count, foilX, foilY, foilWidth, foilHeight);
 });
 
 let particles = [];
@@ -65,8 +77,8 @@ function drawBackground() {
   ctx.beginPath();
 }
 
-function createNuclei(foilX, foilY, foilWidth, foilHeight) {
-  for (let i = 0; i < 15; i++) {
+function createNuclei(count, foilX, foilY, foilWidth, foilHeight) {
+  for (let i = 0; i < count; i++) {
     nuclei.push({
       x: cx + foilX + Math.random() * foilWidth,
       y: cy + foilY + Math.random() * foilHeight,
@@ -178,5 +190,5 @@ function update() {
   animationId = requestAnimationFrame(update);
 }
 if (atomicModel == "nuclear") {
-  createNuclei(foilX, foilY, foilWidth, foilHeight);
+  createNuclei(foilThickness, foilX, foilY, foilWidth, foilHeight);
 }
