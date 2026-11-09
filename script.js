@@ -15,7 +15,7 @@ img.onload = () => drawEverything();
 let animationId;
 let spawnId;
 const nuclei = [];
-const SPEED = 10
+const SPEED = 10;
 let foilThickness = 1;
 let density = 5;
 let count = foilThickness * density;
@@ -138,7 +138,7 @@ function drawLeadBlock() {
 
 function drawParticle(x, y) {
   ctx.beginPath();
-  ctx.ellipse(x, y, 4, 4, 0, 0, Math.PI * 2);
+  ctx.ellipse(x, y, 3, 3, 0, 0, Math.PI * 2);
   ctx.fillStyle = "#FF4500";
   ctx.fill();
 }
@@ -175,7 +175,14 @@ function updateParticles() {
     p.x += p.vx;
     p.y += p.vy;
   });
-  particles = particles.filter((p) => p.x < canvas.width);
+  particles = particles.filter((p) => {
+    const dx = p.x - cx;
+    const dy = p.y - cy;
+    const hitRing =
+      Math.hypot(dx, dy) >= R * 0.86 &&
+      Math.abs(Math.atan2(dy, dx)) <= Math.PI - gap;
+    return !hitRing && p.x > 0 && p.y > 0 && p.y < canvas.height;
+  });
 }
 
 function drawEverything() {
