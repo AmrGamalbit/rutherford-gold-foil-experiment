@@ -48,20 +48,18 @@ function drawBackground() {
 function createNuclei(foilX, foilY, foilWidth, foilHeight) {
   for (let i = 0; i < 100; i++) {
     nuclei.push({
-      x: foilX + Math.random() * foilWidth,
-      y: foilY + Math.random() * foilHeight,
+      x: cx + foilX + Math.random() * foilWidth,
+      y: cy + foilY + Math.random() * foilHeight,
     });
   }
 }
 
 function drawFoil() {
   ctx.fillStyle = gold;
-  ctx.translate(cx, cy);
-  ctx.transform(1, 0.5, 0, 1, 0, 0);
+  ctx.transform(1, 0.5, 0, 1, cx, cy);
   ctx.fillRect(foilX, foilY, foilWidth, foilHeight);
   ctx.fillStyle = "red";
-  console.log(nuclei);
-  nuclei.forEach((n) => ctx.fillRect(n.x, n.y, 2, 2));
+  nuclei.forEach((n) => ctx.fillRect(n.x - cx, n.y - cy, 2, 2));
   ctx.resetTransform();
 }
 
@@ -117,12 +115,31 @@ function spawnParticle() {
   const startX = leadBlockX + 50;
   const startY = leadBlockY + 50;
   const leadBlockHeight = 100;
-  particles.push({ x: startX, y: startY + (Math.random() * 2 - 1) * 50 });
+  particles.push({
+    x: startX,
+    y: startY + (Math.random() * 2 - 1) * 50,
+    vx: 10,
+    vy: 0,
+  });
 }
 
 function updateParticles() {
   particles.forEach((p) => {
-    p.x += 10;
+    for (const n of nuclei) {
+      console.log(n.x);
+      console.log(n.y);
+      const dx = p.x - n.x;
+      const dy = p.y - n.y;
+      const d2 = dx * dx + dy * dy;
+      const d = Math.sqrt(d2);
+      if (d > 40) {
+        continue;
+      }
+      p.vx = -10;
+      p.vy = 1;
+    }
+    p.x += p.vx;
+    p.y += p.vy;
   });
   particles = particles.filter((p) => p.x < canvas.width);
 }
