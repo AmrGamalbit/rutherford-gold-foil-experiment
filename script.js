@@ -15,9 +15,9 @@ img.onload = () => drawEverything();
 let animationId;
 let spawnId;
 const nuclei = [];
-
-let foilThickness = 1
-let density = 5
+const SPEED = 10
+let foilThickness = 1;
+let density = 5;
 let count = foilThickness * density;
 let numberOfParticles = 1;
 
@@ -43,7 +43,7 @@ numberOfParticlesInput.addEventListener("change", (e) => {
 const foilThicknessInput = document.getElementById("foil-thickness");
 foilThicknessInput.addEventListener("change", (e) => {
   foilThickness = Number(e.target.value);
-  count = foilThickness * density
+  count = foilThickness * density;
   nuclei.length = 0;
   createNuclei(count, foilX, foilY, foilWidth, foilHeight);
 });
@@ -169,6 +169,9 @@ function updateParticles() {
       p.vx += (dx / d) * force;
       p.vy += (dy / d) * force;
     }
+    const speedAfter = Math.hypot(p.vx, p.vy);
+    p.vx *= SPEED / speedAfter;
+    p.vy *= SPEED / speedAfter;
     p.x += p.vx;
     p.y += p.vy;
   });
