@@ -28,7 +28,7 @@ startButton.addEventListener("click", () => {
   running = !running;
   if (running) {
     animationId = requestAnimationFrame(update);
-    spawnId = setInterval(spawnParticle, 1000);
+    spawnId = setInterval(spawnParticle, 100);
     startButton.innerText = "Pause";
   } else {
     cancelAnimationFrame(animationId);
@@ -46,7 +46,7 @@ function drawBackground() {
 }
 
 function createNuclei(foilX, foilY, foilWidth, foilHeight) {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 15; i++) {
     nuclei.push({
       x: cx + foilX + Math.random() * foilWidth,
       y: cy + foilY + Math.random() * foilHeight,
@@ -59,7 +59,7 @@ function drawFoil() {
   ctx.transform(1, 0.5, 0, 1, cx, cy);
   ctx.fillRect(foilX, foilY, foilWidth, foilHeight);
   ctx.fillStyle = "red";
-  nuclei.forEach((n) => ctx.fillRect(n.x - cx, n.y - cy, 2, 2));
+  // nuclei.forEach((n) => ctx.fillRect(n.x - cx, n.y - cy, 2, 2));
   ctx.resetTransform();
 }
 
@@ -126,17 +126,16 @@ function spawnParticle() {
 function updateParticles() {
   particles.forEach((p) => {
     for (const n of nuclei) {
-      console.log(n.x);
-      console.log(n.y);
       const dx = p.x - n.x;
       const dy = p.y - n.y;
       const d2 = dx * dx + dy * dy;
-      const d = Math.sqrt(d2);
-      if (d > 40) {
+      const d = Math.sqrt(d2) + 0.001;
+      if (d > 4) {
         continue;
       }
-      p.vx = -10;
-      p.vy = 1;
+      const force = 100 / (d2 + 4);
+      p.vx += (dx / d) * force;
+      p.vy += (dy / d) * force;
     }
     p.x += p.vx;
     p.y += p.vy;
