@@ -15,6 +15,11 @@ img.onload = () => drawEverything();
 let animationId;
 
 let particles = [];
+const nuclei = [];
+const foilX = -20;
+const foilY = -100;
+const foilWidth = 100;
+const foilHeight = 200;
 
 const startButton = document.getElementById("start-button");
 startButton.addEventListener("click", () => {
@@ -34,11 +39,24 @@ function drawBackground() {
   ctx.beginPath();
 }
 
+function createNuclei(foilX, foilY, foilWidth, foilHeight) {
+  for (let i = 0; i < 100; i++) {
+    nuclei.push({
+      x: foilX + Math.random() * foilWidth,
+      y: foilY + Math.random() * foilHeight,
+    });
+  }
+  console.log(nuclei);
+}
+
 function drawFoil() {
   ctx.fillStyle = gold;
   ctx.translate(cx, cy);
   ctx.transform(1, 0.5, 0, 1, 0, 0);
-  ctx.fillRect(-20, -100, 100, 200);
+  ctx.fillRect(foilX, foilY, foilWidth, foilHeight);
+  ctx.fillStyle = "red";
+  console.log(nuclei);
+  nuclei.forEach((n) => ctx.fillRect(n.x, n.y, 2, 2));
   ctx.resetTransform();
 }
 
@@ -93,7 +111,8 @@ function drawParticle(x, y) {
 function spawnParticle() {
   const startX = leadBlockX + 50;
   const startY = leadBlockY + 50;
-  particles.push({ x: startX, y: startY });
+  const leadBlockHeight = 100;
+  particles.push({ x: startX, y: startY + (Math.random() * 2 - 1) * 50 });
 }
 
 function updateParticles() {
@@ -119,3 +138,4 @@ function update() {
 }
 
 setInterval(spawnParticle, 1000);
+createNuclei(foilX, foilY, foilWidth, foilHeight);
