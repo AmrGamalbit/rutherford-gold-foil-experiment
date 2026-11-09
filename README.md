@@ -13,7 +13,7 @@ This is an interactive simulation of Rutherford's gold foil experiment. It helps
 - Clone the repo or download the ZIP folder directly from GitHub:
 
   ```bash
-  git clone <repo-url>
+  git clone https://github.com/AmrGamalbit/rutherford-gold-foil-experiment
   ```
 
 - Open the project folder on your device.
