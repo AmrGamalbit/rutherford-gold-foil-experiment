@@ -14,9 +14,20 @@ img.src = "assets/radiation.png";
 img.onload = () => drawEverything();
 let animationId;
 let spawnId;
-
-let particles = [];
 const nuclei = [];
+
+const modelInputs = document.querySelectorAll('input[type="radio"]');
+let atomicModel = Array.from(modelInputs).find((i) => i.checked).value;
+modelInputs.forEach((i) =>
+  i.addEventListener("change", (e) => {
+    atomicModel = e.target.value
+    nuclei.length = 0
+    if (atomicModel == "nuclear") {
+      createNuclei(foilX, foilY, foilWidth, foilHeight);
+    }
+  }),
+);
+let particles = [];
 const foilX = -20;
 const foilY = -100;
 const foilWidth = 100;
@@ -157,5 +168,6 @@ function update() {
   updateParticles();
   animationId = requestAnimationFrame(update);
 }
-
-createNuclei(foilX, foilY, foilWidth, foilHeight);
+if (atomicModel == "nuclear") {
+  createNuclei(foilX, foilY, foilWidth, foilHeight);
+}
