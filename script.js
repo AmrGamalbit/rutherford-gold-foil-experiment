@@ -13,6 +13,7 @@ const img = new Image();
 img.src = "assets/radiation.png";
 img.onload = () => drawEverything();
 let animationId;
+let spawnId;
 
 let particles = [];
 const nuclei = [];
@@ -20,16 +21,21 @@ const foilX = -20;
 const foilY = -100;
 const foilWidth = 100;
 const foilHeight = 200;
-
+let running = false;
 const startButton = document.getElementById("start-button");
+
 startButton.addEventListener("click", () => {
-  if (animationId) {
-    cancelAnimationFrame(animationId);
-    startButton.innerText = "Start";
-    animationId = null;
-  } else {
+  running = !running;
+  if (running) {
     animationId = requestAnimationFrame(update);
+    spawnId = setInterval(spawnParticle, 1000);
     startButton.innerText = "Pause";
+  } else {
+    cancelAnimationFrame(animationId);
+    clearInterval(spawnId);
+    animationId = null;
+    spawnId = null;
+    startButton.innerText = "Start";
   }
 });
 
@@ -46,7 +52,6 @@ function createNuclei(foilX, foilY, foilWidth, foilHeight) {
       y: foilY + Math.random() * foilHeight,
     });
   }
-  console.log(nuclei);
 }
 
 function drawFoil() {
@@ -137,5 +142,4 @@ function update() {
   animationId = requestAnimationFrame(update);
 }
 
-setInterval(spawnParticle, 1000);
 createNuclei(foilX, foilY, foilWidth, foilHeight);
